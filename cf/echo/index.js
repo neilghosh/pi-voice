@@ -24,7 +24,7 @@ handlePrice = function(quoteType, res, responseOutStr) {
     res.setHeader('Content-Type', 'application/json'); //Requires application/json MIME type
     res.send(JSON.stringify({
         "speech": "Last price was " + responseOut['lastPrice'],
-        "displayText": "<b>"+ responseOut.symbol +" : "+ responseOut.lastPrice + " INR</b>" 
+        "displayText": ""+ responseOut.symbol +" : "+ responseOut.lastPrice + " INR" 
     }));
 }
 
