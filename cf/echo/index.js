@@ -1,4 +1,5 @@
 const request = require('request');
+const MAX_COMPANIES_IN_RESPONSE = 2;
 
 function getCompanies(name, res, handleCompanies, handlePrice) {
     request.get('https://trade-junky.appspot.com/companysearch?name=' + name, function(error, response, body) {
@@ -34,21 +35,24 @@ handleCompanies = function(res, responseOutStr, handlePrice) {
     if (companyCount == 0) {
         res.setHeader('Content-Type', 'application/json'); //Requires application/json MIME type
         res.send(JSON.stringify({
-            "speech": "There is no such companies",
-            "displayText": "There is no such companies"
+            "speech": "Sorry never heard of this company registered in NSE. Say it again please.",
+            "displayText": "Sorry never heard of this company registered in NSE. Say it again please."
         }));
 
     }
     if (companyCount > 1) {
+        var count = 0;
+        var companyNames = [];
         for (var key in responseOut) {
-            console.log("Key: " + key);
-            console.log("Value: " + responseOut[key]);
-            response = response + responseOut[key] + " or ";
+            companyNames.push(responseOut[key]);
+            if(++count >= MAX_COMPANIES_IN_RESPONSE){
+                break;
+            }
         }
-        response = response + "something else ?";
+        response = companyNames.join(', ')+" or something else?";;
         res.setHeader('Content-Type', 'application/json'); //Requires application/json MIME type
         res.send(JSON.stringify({
-            "speech": "Which one are you talking about " + response,
+            "speech": "Which company are you talking about? " + response,
             "displayText": response
         }));
 
@@ -67,22 +71,18 @@ handleCompanies = function(res, responseOutStr, handlePrice) {
  */
 exports.helloWorld = function helloWorld(req, res) {
     var intent = req.body.result.metadata.intentName
-    if (intent == "Tell-Stocks") {
-        var companyname = req.body.result.parameters.companyname;
-        getCompanies(companyname, res, handleCompanies, handlePrice)
-    } else if (intent == "Tell-Stocks - Tell Price") {
+    if (intent == "Tell-Stocks" || intent == "Tell-Stocks - Tell Price") {
         var companyname = req.body.result.parameters.companyname;
         getCompanies(companyname, res, handleCompanies, handlePrice)
     } else {
         var p1 = req.body.result.parameters.insights;
         console.log(p1);
-        responseOut = "LOL ! You are asking about " + p1; //Default response from the webhook to show it's working
+        responseOut = "You have asked about " + p1 + " but no information found."; //Default response from the webhook to show it's working
         res.setHeader('Content-Type', 'application/json'); //Requires application/json MIME type
         res.send(JSON.stringify({
             "speech": responseOut,
             "displayText": responseOut
             //"speech" is the spoken version of the response, "displayText" is the visual version
-
         }));
     }
 }
