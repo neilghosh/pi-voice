@@ -21,9 +21,15 @@ function getPrice(tickerSym, quoteType, res, handlePrice) {
 
 handlePrice = function(quoteType, res, responseOutStr) {
     responseOut = JSON.parse(responseOutStr);
+    var quote = "";
+    if(quoteType in responseOut){
+        quote =  responseOut[quoteType];
+    } else {
+        quote = responseOut["lastPrice"];
+    }
     res.setHeader('Content-Type', 'application/json'); //Requires application/json MIME type
     res.send(JSON.stringify({
-        "speech": "Last price was " + responseOut['lastPrice'],
+        "speech": "It was " + quote
         "displayText": ""+ responseOut.symbol +" : "+ responseOut.lastPrice + " INR" 
     }));
 }
