@@ -29,7 +29,7 @@ handlePrice = function(quoteType, res, responseOutStr) {
     }
     res.setHeader('Content-Type', 'application/json'); //Requires application/json MIME type
     res.send(JSON.stringify({
-        "speech": "It was " + quote
+        "speech": "It was " + quote,
         "displayText": ""+ responseOut.symbol +" : "+ responseOut.lastPrice + " INR" 
     }));
 }
