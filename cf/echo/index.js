@@ -30,7 +30,7 @@ handlePrice = function(quoteType, res, responseOutStr) {
     res.setHeader('Content-Type', 'application/json'); //Requires application/json MIME type
     res.send(JSON.stringify({
         "speech": "It is " + quote +"",
-        "displayText": ""+ responseOut.symbol +" : **"+ quote+"**"
+        "displayText": ""+ responseOut.symbol +" : "+ quote+""
     }));
 }
 
