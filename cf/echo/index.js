@@ -83,10 +83,10 @@ exports.stockTellerWebHook = function stockTellerWebHook(req, res) {
         var quoteType = req.body.result.parameters.quotetype;
         console.log("Webhook received companyname: " + companyname + " quoteType: " + quoteType );
         if(intent == "Tell-Stocks - Tell Price - Tell Quote") {
-            var companyname_old = req.body.result.parameters.companyname_old;
-            var quoteType_old = req.body.result.parameters.quotetype_old;
-            companyname = companyname == '' ? companyname_old :  companyname;
-            quoteType = quoteType == '' ? quoteType_old : quoteType;
+            var companyname_new = req.body.result.parameters.companyname_new;
+            var quoteType_new = req.body.result.parameters.quotetype_new;
+            companyname = companyname_new == '' ? companyname :  companyname_new;
+            quoteType = quoteType_new == '' ? quoteType : quoteType_new;
         }
         getCompanies(companyname, quoteType, res, handleCompanies, handlePrice)
     } else {
