@@ -75,11 +75,12 @@ handleCompanies = function(quoteType,res, responseOutStr, handlePrice) {
  * @param {!Object} req Cloud Function request context.
  * @param {!Object} res Cloud Function response context.
  */
-exports.helloWorld = function helloWorld(req, res) {
+exports.stockTellerWebHook = function stockTellerWebHook(req, res) {
     var intent = req.body.result.metadata.intentName
     if (intent == "Tell-Stocks" || intent == "Tell-Stocks - Tell Price") {
         var companyname = req.body.result.parameters.companyname;
-        var quoteType = req.body.result.parameters.quotetype
+        var quoteType = req.body.result.parameters.quotetype;
+        console.log("Webhook received companyname: " + companyname + " quoteType: " + quoteType );
         getCompanies(companyname, quoteType, res, handleCompanies, handlePrice)
     } else {
         var p1 = req.body.result.parameters.insights;
