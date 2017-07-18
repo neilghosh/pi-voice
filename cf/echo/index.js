@@ -25,12 +25,12 @@ handlePrice = function(quoteType, res, responseOutStr) {
     if(quoteType in responseOut){
         quote =  responseOut[quoteType];
     } else {
-        quote = responseOut["lastPrice"];
+        quote = responseOut["lastPrice"] + " INR";
     }
     res.setHeader('Content-Type', 'application/json'); //Requires application/json MIME type
     res.send(JSON.stringify({
-        "speech": "It was " + quote,
-        "displayText": ""+ responseOut.symbol +" : "+ responseOut.lastPrice + " INR" 
+        "speech": "It is " + quote +"",
+        "displayText": ""+ responseOut.symbol +" : **"+ quote+"**"
     }));
 }
 
