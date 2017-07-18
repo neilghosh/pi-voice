@@ -6,7 +6,7 @@ function getCompanies(name, quoteType, res, handleCompanies, handlePrice) {
         console.log('error:', error); // Print the error if one occurred 
         console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
         console.log('body:', body); //Prints the response of the request. 
-        handleCompanies(quoteType,res, body, handlePrice)
+        handleCompanies(quoteType,res, body, handlePrice);
     });
 }
 
@@ -15,7 +15,7 @@ function getPrice(tickerSym, quoteType, res, handlePrice) {
         console.log('error:', error); // Print the error if one occurred 
         console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
         console.log('body:', body); //Prints the response of the request. 
-        handlePrice(quoteType, res, body)
+        handlePrice(quoteType, res, body);
     });
 }
 
