@@ -2,7 +2,14 @@ const request = require('request');
 const MAX_COMPANIES_IN_RESPONSE = 2;
 
 function getCompanies(name, quoteType, res, handleCompanies, handlePrice) {
-    request.get('https://trade-junky.appspot.com/companysearch?name=' + name, function(error, response, body) {
+    var options = {
+      url: 'https://trade-junky.appspot.com/api/companysearch?name=' + name,
+      headers: {
+      'api-key': '2246696acd8638f0fbfe5d6e4d515a3eaefed5c19b5a2c18'
+      }
+    };
+    
+    request.get(options, function(error, response, body) {
         console.log('error:', error); // Print the error if one occurred 
         console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
         console.log('body:', body); //Prints the response of the request. 
@@ -11,7 +18,13 @@ function getCompanies(name, quoteType, res, handleCompanies, handlePrice) {
 }
 
 function getPrice(tickerSym, quoteType, res, handlePrice) {
-    request.get('https://trade-junky.appspot.com/getquote?name=' + tickerSym, function(error, response, body) {
+    var options = {
+      url: 'https://trade-junky.appspot.com/api/getquote?name=' + tickerSym,
+      headers: {
+      'api-key': '2246696acd8638f0fbfe5d6e4d515a3eaefed5c19b5a2c18'
+      }
+    };
+    request.get(options, function(error, response, body) {
         console.log('error:', error); // Print the error if one occurred 
         console.log('statusCode:', response && response.statusCode); // Print the response status code if a response was received 
         console.log('body:', body); //Prints the response of the request. 
